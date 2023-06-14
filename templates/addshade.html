@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block 'main' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <h3 class="bg-primary text-white text-center p-2">Add color shade</h3>
+
+            <form method="POST" action="">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="pid" class="form-label"><strong>Shade Name</strong></label>
+                    <input type="text" class="form-control" name="name" id="pid" placeholder="Enter Product Name">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for=""><Strong>Select Ctaegory</Strong></label>
+                    <select class="form-select" name="cat" aria-label="Default select example">
+                        <option value="1">Oil Based</option>
+                        <option value="2">Water Based</option>
+                      </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="priceid" class="form-label"><strong>Color Price</strong></label>
+                    <input type="number" class="form-control" name="price" id="priceid" placeholder="Enter Product Price">
+                </div>
+
+                <div class="mb-3">
+                    <label for="pid" class="form-label"><strong>Color Status</strong></label>
+                    
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" value="1" id="radio1">
+                        <label class="form-check-label" for="radio1">
+                          Active
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" value="0" id="radio2" checked>
+                        <label class="form-check-label" for="radio2">
+                          Inactive
+                        </label>
+                    </div>
+                    <div class="my-3">
+                        <button type="submit" class="btn btn-danger">Add Shade</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-8 mt-5">
+            
+            <h3 class="bg-primary text-white text-center p-2">View Shades</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>Shade Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+        {% for x in paints %}
+                <tr>
+                    <td>{{x.name}}</td>
+                    {% if x.cat == 1 %}
+                    <td>Oil Based</td>
+                    {% else %}
+                    <td>Water Based</td>
+                    {% endif %}
+                   
+                    <td>{{x.price}}</td>
+                    
+                    {% if x.status == 1 %}
+                    <td class="text-success">Active</td>
+                    {% else %}
+                    <td class="text-danger"><b>Inactive</b></td>
+                    {% endif %}
+                   
+                    <td><a href="/editshade/{{x.id}}"><button class="btn btn-warning">Edit</button></a></td>
+                    <td><a href="/delshade/{{x.id}}"><button class="btn btn-danger">Delete</button></a></td>
+                </tr>
+        {% endfor%}
+            </table>
+           
+        </div>
+    </div>
+</div>    
+{% endblock 'main' %}
