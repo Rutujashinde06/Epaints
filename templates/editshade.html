@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block 'main' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 my-4 mx-auto">
+            {% for x in paints %}
+            <form method="POST" action="/editshade/{{x.id}}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="pid" class="form-label"><strong>Shade Name</strong> </label>
+                    <input type="text" class="form-control" value="{{x.name}}" name="name" id="pid" placeholder="Enter Product Name">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"><strong>Select Category</strong> </label>
+                    <select class="form-select" name="cat" aria-label="Default select example">
+                       
+                        {% if x.cat == 1 %}
+                        <option value="1">Oil-Based</option>
+                        {% else %}
+                        <option value="2">Water-Based</option>
+                        {% endif %}
+                        <option value="0"></option>
+                        <option value="1">Oil-Based</option>
+                        <option value="2">Water-Based</option>
+                      </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="priceid" class="form-label"><strong>Color Price</strong> </label>
+                    <input type="number" class="form-control" value="{{x.price}}" name="price" id="priceid" placeholder="Enter Product Price">
+                  </div>
+
+                  <div class="mb-3">
+
+                    <label class="form-label"><strong>Status</strong> </label>
+                    {% if x.status == 1%}
+                     <div class="form-check">
+                    <input class="form-check-input" type="radio" name="status"  value="1" id="radio1" checked>
+                    <label class="form-check-label" for="radio1">
+                      Active
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="status" value="0" id="radio2" >
+                    <label class="form-check-label" for="radio2">
+                      Inactive
+                    </label>
+                  </div>
+                  {% else %}
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="status"  value="1" id="radio1" >
+                    <label class="form-check-label" for="radio1">
+                      Active
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="status" value="0" id="radio2" checked>
+                    <label class="form-check-label" for="radio2">
+                      Inactive
+                    </label>
+                  </div>
+                  {% endif %}
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-danger">Update</button>
+                    </div>
+                  </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock 'main' %}

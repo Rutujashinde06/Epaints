@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 'main' %}
+<div class="row">
+<div class="col-md-3 mt-3">
+  <h3 class="bg-secondary text-white p-2">Sort by price</h3>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link " href="/sort/0"><h5>Low to high</h5></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/sort/1"><h5>High to low</h5></a>
+    </li>
+  </ul><!--sort end-->
+  <h3 class="bg-secondary text-white p-2">filters</h3>
+  <h4>By category</h4>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link " href="/catfilter/1"><h5>Oil-Based</h5></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/catfilter/2"><h5>Water-Based</h5></a>
+    </li>
+    
+  </ul><!--sort by category-->
+  <h4>By Price</h4>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link " href="/pricefilter/0"><h5> Rs. 5000</h5></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pricefilter/1"><h5> Rs. 5000</h5></a>
+    </li>
+   
+  </ul><!--sort by price-->
+  <h4>By Price range</h4>
+  <form action="/pricerange">
+    <div>
+    <label for ="one" class="form-label" width="50%"><strong>Min</strong></label>
+    <input  type="number" class="form-control" name="min" id="one" placeholder="Min value"></label>
+  </div>
+  <div>
+    <label for ="two" class="form-label"><strong>Max</strong></label>
+    <input type="number" class="form-control" name="max" id="two" placeholder="Max value"></label>
+  </div>
+  <div class="mb-3">
+   <button type="submit" class="btn btn-success">Apply</button>
+  </div>
+  </form>
+<!--sort by pricerange-->
+</div>
+<div class="col-md-9">
+  <div class="row mt-3">
+  {% for x in paints %}
+    <div class="col-md-3 mt-3 mb-4">
+        <div class="card" style="width: 100%;">
+            <img src="{{x.pimage.url}}" style="height: 200px;" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ x.name}}</h5>
+              {% if x.cat == 1 %}
+              <p class="card-text">Oil-Based</p>
+              {% elif x.cat == 2 %}
+              <p class="card-text">Water-Based</p>
+            
+              {% endif %}
+              <h6>{{x.price}}</h6>
+              <a href="/cdetails/{{x.id}}" class="btn btn-secondary">See More</a>
+            </div>
+          </div><!--card ends-->
+    </div><!--col ends-->
+    {% endfor %}
+ </div><!--row ends-->
+</div>
+
+{% endblock 'main' %}
